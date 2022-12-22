@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/coffee-store/static/css/main.9e9782b1.css",
+    "main.js": "/coffee-store/static/js/main.a36e7a25.js",
+    "static/media/fa-solid-900.ttf": "/coffee-store/static/media/fa-solid-900.b1a653db79258eeccc5d.ttf",
+    "static/media/fa-brands-400.ttf": "/coffee-store/static/media/fa-brands-400.450a5c898f0b184b968b.ttf",
+    "static/media/fa-solid-900.woff2": "/coffee-store/static/media/fa-solid-900.41c0f706d8ce93933771.woff2",
+    "static/media/fa-brands-400.woff2": "/coffee-store/static/media/fa-brands-400.3ac6859b28be946745f9.woff2",
+    "static/media/fa-regular-400.ttf": "/coffee-store/static/media/fa-regular-400.3cd9fb8fcec4ad0f99d4.ttf",
+    "static/media/noPhoto.png": "/coffee-store/static/media/noPhoto.f6ba51769fc777893aa9.png",
+    "static/media/fa-regular-400.woff2": "/coffee-store/static/media/fa-regular-400.1f3772178d9e5bed38a6.woff2",
+    "static/media/fa-v4compatibility.ttf": "/coffee-store/static/media/fa-v4compatibility.e314b618134d5be20996.ttf",
+    "static/media/fa-v4compatibility.woff2": "/coffee-store/static/media/fa-v4compatibility.4ee7f902d88f819e251c.woff2",
+    "index.html": "/coffee-store/index.html",
+    "main.9e9782b1.css.map": "/coffee-store/static/css/main.9e9782b1.css.map",
+    "main.a36e7a25.js.map": "/coffee-store/static/js/main.a36e7a25.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9e9782b1.css",
+    "static/js/main.a36e7a25.js"
+  ]
+}
