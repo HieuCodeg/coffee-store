@@ -1,45 +1,46 @@
 import React, { useState, useEffect } from "react";
 import Loading from './../Loading/Loading';
 import CategoryService from './../../services/categoryService';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import SizeService from './../../services/SizeService';
 import { toast } from "react-toastify";
 import ProductService from './../../services/productService';
 import noPhoto from "../../assets/images/noPhoto.png";
 import FileHelper from './../../helper/FileHelper';
+import Helper from './../../helper/Helper';
 
 var imageFile = null;
-
-function CreateProduct() {
+var checkChangePhoto = false;
+var oldPhoto;
+function EditProduct() {
+    const {productId} = useParams();
     const [state,setState] = useState({
         loading: false,
-        product:  {
-            name: "",
-            description: "",
-            price: "",
-            photo: "", 
-            size:[]
-        },
+        product:  {},
         categories: [],
         sizes: [],
         errorMessage: ""
     })
+
     useEffect(() => {
         try {
             setState({...state, loading: true});
             async function getData() {
+                let resProduct = await ProductService.getEditProducts(productId);
                 let resCategoris = await CategoryService.getCategories();
                 let resSizes = await SizeService.getSizes();
+                oldPhoto = resProduct.data.photo;
                 setState({
                     ...state,
                     loading: false,
                     categories: resCategoris.data,
-                    sizes: resSizes.data
+                    sizes: resSizes.data,
+                    product: resProduct.data
                 })
             }
             getData();
         } catch (error) {
-            toast.error(error.message)
+            
         }
     }, [])
 
@@ -47,7 +48,7 @@ function CreateProduct() {
         e.preventDefault();
         
         try {
-            if (size.length == 0) {
+            if (size.length === 0) {
                 toast.error('Bạn chưa chọn size!');
                 return;
             }
@@ -56,34 +57,33 @@ function CreateProduct() {
                 return;
             }
             setState({ ...state, loading: true });
-            let photoUrl = await handleUploadPhoto();
-            let newProduct = {};
-            if (photoUrl) {
-                newProduct = {...product};
-                newProduct.photo = photoUrl;
-            } else {
-                toast.error('Vui lòng chọn ảnh!');
-                return;
-            }
+            let newProduct = {...product};
+            let photoUrl;
+            if (checkChangePhoto) {
+                let fileName = Helper.getFilename(oldPhoto);
+                await FileHelper.destroyImage(fileName);
+                photoUrl = await handleUploadPhoto();
+                if (photoUrl) {
+                    newProduct.photo = photoUrl;
+                } else {
+                    toast.error('Vui lòng chọn ảnh!');
+                    return;
+                }
+            } 
 
-            async function createProduct() {
-                let resCreate = await ProductService.createProduct(newProduct);
-                if (resCreate.data) {
-                   toast.success(`${resCreate.data.name} tạo thành công`);
+            async function editProduct() {
+                let resProductEdit = await ProductService.editProduct(newProduct);
+                if (resProductEdit.data) {
+                   toast.success(`${resProductEdit.data.name} cập nhật thành công`);
+                   checkChangePhoto = false;
                    setState({
                     ...state,
                     loading: false,
-                    product : {
-                        name: "",
-                        description: "",
-                        price: "",
-                        photo: "", 
-                        size:[]
-                    }
+                    product : resProductEdit.data
                 })
                 }
             }
-            createProduct();
+            editProduct();
         } catch (error) {
             toast.error(error.message);
         }
@@ -114,11 +114,14 @@ function CreateProduct() {
         })
     }
 
-    
+   
 
     const handleChangePhoto = (e) => {
         imageFile = e.target.files[0];
         let fakePhotoUrl = URL.createObjectURL(e.target.files[0]);
+        if (fakePhotoUrl) {
+            checkChangePhoto = true;
+        }
         setState({
             ...state,
             product: {
@@ -144,7 +147,7 @@ function CreateProduct() {
     }
 
     const { loading, categories, product, sizes } = state;
-    const { name, description, price, photo, size } = product;
+    const { id, name, description, price, photo, size } = product;
 
     useEffect(() => {
         return ( () => {
@@ -156,7 +159,7 @@ function CreateProduct() {
         <>
             <section className="product-info my-2">
                 <div className="container">
-                    <h3 className="me-2 text-success">Create Product</h3>
+                    <h3 className="me-2 text-success">Edit Product</h3>
                     <p>Ipsum elit nulla tempor adipisicing labore occaecat nulla veniam. Eu nulla nulla culpa magna proident occaecat elit culpa non culpa. Consequat dolore est voluptate pariatur laborum aute labore culpa ipsum ad ipsum veniam sunt. Voluptate ex excepteur amet minim anim ullamco occaecat pariatur quis consectetur.</p>
                 </div>
             </section>
@@ -223,8 +226,8 @@ function CreateProduct() {
                                             </select>
                                         </div>
                                         <div className="mb-2">
-                                            <button type="submit" className="btn btn-success btn-sm me-2">Create</button>
-                                            <Link className="btn btn-dark btn-sm" to={"/coffee-store"}>Back</Link>
+                                            <button type="submit" className="btn btn-success btn-sm me-2">Lưu thay đổi</button>
+                                            <Link className="btn btn-outline-dark btn-sm" to={"/coffee-store"}>Quay về</Link>
                                         </div>
                                     </form>
                                 </div>
@@ -236,9 +239,6 @@ function CreateProduct() {
                                             <input type="file" accept="image/*" id="photoUpload" className="d-none" 
                                                 onChange={handleChangePhoto}
                                             />
-                                            <button className="btn btn-secondary btn-sm"
-                                                onClick={handleUploadPhoto}
-                                            >Upload</button>
                                     </div>
                                 </div>
                             </div>
@@ -251,4 +251,4 @@ function CreateProduct() {
     )
 }
 
-export default CreateProduct;
+export default EditProduct;
