@@ -7,7 +7,7 @@ you can search product by name. 💖
 
 ## Technology
 Project is created with:<br/>
-[react](https://skillicons.dev/icons?i=react)
+![react](https://skillicons.dev/icons?i=react)
 ![html](https://skillicons.dev/icons?i=html)
 ![js](https://skillicons.dev/icons?i=js)
 ![css](https://skillicons.dev/icons?i=css)
