@@ -121,7 +121,7 @@ function ProductList() {
 
     const getCategoryName = (categoryId) => {
         let category = categories.find((cat) => cat.id == categoryId);
-        return category.name
+        return category.name;
     }
 
     const { loading, products, categories } = state;
