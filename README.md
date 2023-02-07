@@ -1,4 +1,4 @@
-# GAME SNACK
+# COFFEE STORE
 
 ## Introduction
 
@@ -7,14 +7,14 @@ you can search product by name. 💖
 
 ## Technology
 Project is created with:<br/>
-[![react](https://skillicons.dev/icons?i=react)]
-[![html](https://skillicons.dev/icons?i=html)]
-[![js](https://skillicons.dev/icons?i=js)]
-[![css](https://skillicons.dev/icons?i=css)]
-[![bootstrap](https://skillicons.dev/icons?i=bootstrap)]
+[react](https://skillicons.dev/icons?i=react)
+![html](https://skillicons.dev/icons?i=html)
+![js](https://skillicons.dev/icons?i=js)
+![css](https://skillicons.dev/icons?i=css)
+![bootstrap](https://skillicons.dev/icons?i=bootstrap)
 
 
-## How to play this game
+## How to try my app
 
 -   **Please click this Link:** <a target="blank" href="https://hieucodeg.github.io/coffee-store">https://hieucodeg.github.io/coffee-store</a>
 
